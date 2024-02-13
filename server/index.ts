@@ -8,6 +8,10 @@ dotenv.config();
 const app = express();
 app.use(cors());
 
+app.get("/api/", (req, res) => {
+  res.json({ message: "Your API is working!" });
+});
+
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
