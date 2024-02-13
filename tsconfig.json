@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es6", // Consider "esnext" if you're using a recent Node.js version
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true // Optional
+  },
+  "include": [
+    "./server/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
