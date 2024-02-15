@@ -1,8 +1,9 @@
+import { Server as SocketIOServer } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import http from "http";
-import { Server as SocketIOServer } from "socket.io";
+
 dotenv.config();
 
 const app = express();
