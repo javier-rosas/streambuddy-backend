@@ -1,4 +1,6 @@
-import { Server as SocketIOServer } from "socket.io";
+import { Socket, Server as SocketIOServer } from "socket.io";
+
+import { ExpressPeerServer } from "peer";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -8,51 +10,39 @@ dotenv.config();
 
 const app = express();
 app.use(cors());
-
-app.get("/api/", (req, res) => {
-  res.json({ message: "Your API is working!" });
-});
-
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: "*",
+    origin: "*", // Adjust this to the domain where your extension is running, for security purposes
     methods: ["GET", "POST"],
   },
 });
 
-io.on("connection", (socket) => {
-  socket.on("join room", (roomID: string) => {
-    socket.join(roomID);
-    const otherUsers = io.sockets.adapter.rooms.get(roomID);
-    if (otherUsers && otherUsers.size > 1) {
-      socket.to(roomID).emit(
-        "all users",
-        Array.from(otherUsers).filter((id) => id !== socket.id)
-      );
-    }
-  });
-
-  socket.on(
-    "sending signal",
-    (payload: { userToSignal: string; signal: any; callerID: string }) => {
-      io.to(payload.userToSignal).emit("user joined", {
-        signal: payload.signal,
-        callerID: payload.callerID,
-      });
-    }
-  );
-
-  socket.on(
-    "returning signal",
-    (payload: { callerID: string; signal: any }) => {
-      io.to(payload.callerID).emit("receiving returned signal", {
-        signal: payload.signal,
-        id: socket.id,
-      });
-    }
-  );
+// PeerJS server
+const peerServer = ExpressPeerServer(server, {
+  // debug: true,
+  path: "/",
 });
 
-const PORT: number | string = process.env.PORT || 2000;
-server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+app.use("/peerjs", peerServer);
+
+app.get("/", (req, res) => {
+  res.send("Server is running for the Google Meets Clone Extension.");
+});
+
+io.on("connection", (socket: Socket) => {
+  console.log("connection", socket.id);
+  socket.on("join-room", (roomId, userId) => {
+    socket.join(roomId);
+    socket.broadcast.to(roomId).emit("user-connected", userId);
+
+    socket.on("disconnect", () => {
+      socket.broadcast.to(roomId).emit("user-disconnected", userId);
+    });
+  });
+});
+
+// Update this to your desired port, in this case, 2000
+server.listen(2000, () => {
+  console.log("Server is running on port 2000");
+});
