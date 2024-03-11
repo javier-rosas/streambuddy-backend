@@ -1,6 +1,5 @@
-import { Socket, Server as SocketIOServer } from "socket.io";
-
 import { ExpressPeerServer } from "peer";
+import { Server as SocketIOServer } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -13,7 +12,13 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: "*", // Adjust this to the domain where your extension is running, for security purposes
+    // many origins are allowed in a list of strings
+    origin: [
+      "https://www.netflix.com",
+      "chrome-extension://emgjobcfmbjoiggclkjkiemgjdmhakfh",
+    ],
+
+    // origin: "chrome-extension://emgjobcfmbjoiggclkjkiemgjdmhakfh", // Adjust this to the domain where your extension is running, for security purposes
     methods: ["GET", "POST"],
   },
 });
@@ -30,15 +35,12 @@ app.get("/", (req, res) => {
   res.send("Server is running for the Google Meets Clone Extension.");
 });
 
-io.on("connection", (socket: Socket) => {
-  console.log("connection", socket.id);
-  socket.on("join-room", (roomId, userId) => {
-    socket.join(roomId);
-    socket.broadcast.to(roomId).emit("user-connected", userId);
-
-    socket.on("disconnect", () => {
-      socket.broadcast.to(roomId).emit("user-disconnected", userId);
-    });
+io.on("connection", (socket) => {
+  socket.on("join-room", (data) => {
+    console.log("User connected: ", data.userId);
+    socket.join(data.userId);
+    socket.to(data.userId).emit("user-connected", { peerId: data.peerId });
+    console.log("user-connected event emitted");
   });
 });
 
