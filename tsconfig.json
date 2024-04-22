@@ -6,11 +6,9 @@
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true // Optional
+    "allowSyntheticDefaultImports": true // Optional]
   },
-  "include": [
-    "./server/**/*.ts"
-  ],
+  "include": ["./server/**/*.ts"],
   "exclude": [
     "node_modules"
   ]
