@@ -20,6 +20,11 @@ app.use(
   })
 );
 
+// Hello World Route
+app.get("/", (req: any, res: any) => {
+  res.send("Hello World!");
+});
+
 io.on("connection", (socket: any) => {
   console.log("User connected:", socket.id);
 
