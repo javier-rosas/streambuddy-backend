@@ -45,6 +45,8 @@ app.post("/authenticate", (req: any, res: any) => {
     return res.status(400).json({ error: "User data is required" });
   }
 
+  console.log("User data:", user);
+  console.log("JWT_SECRET, ", JWT_SECRET);
   // Ideally, you should validate the user data against your database here
   const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
     expiresIn: "1h",
