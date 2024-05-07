@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true // Optional]
   },
-  "include": ["./server/**/*.ts"],
+  "include": ["./**/*.ts"],
   "exclude": [
     "node_modules"
   ]
