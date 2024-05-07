@@ -31,18 +31,7 @@ const io = require("socket.io")(server, {
   },
 });
 
-// CORS Middleware to handle multiple allowed origins
-const corsOptionsDelegate = function (req: any, callback: any) {
-  var corsOptions;
-  if (ALLOWED_ORIGINS.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = { origin: true }; // Reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // Disable CORS for this request
-  }
-  callback(null, corsOptions); // Callback expects two parameters: error and options
-};
-
-app.use(cors(corsOptionsDelegate));
+app.use(cors());
 app.use(express.json());
 
 // Routes
