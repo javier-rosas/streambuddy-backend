@@ -10,7 +10,7 @@ const server = require("http").createServer(app);
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
-const { authenticateToken } = require("../middleware/authentication");
+const { authenticateToken } = require("./middleware/authentication");
 
 // Load dotenv
 require("dotenv").config();
