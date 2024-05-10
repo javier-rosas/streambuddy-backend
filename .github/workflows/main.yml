@@ -2,7 +2,7 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [main] # only run on main branch
   pull_request:
     branches: [main]
 
