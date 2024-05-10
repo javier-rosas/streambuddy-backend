@@ -1,5 +1,5 @@
 /**
- * This file contains the server code for the video chat application!
+ * This file contains the server code for the video chat application.
  * It uses Express.js and Socket.io to create a server that allows users to connect to each other and share video streams.
  */
 
