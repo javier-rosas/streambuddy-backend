@@ -1,0 +1,34 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.7.0'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
+    - name: Build Docker image
+      run: docker build -t registry.digitalocean.com/streamtogether-backend/streamtogether:latest .
+
+    - name: Login to DigitalOcean Container Registry
+      run: echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login registry.digitalocean.com -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+
+    - name: Push Docker image
+      run: docker push registry.digitalocean.com/streamtogether-backend/streamtogether:latest
