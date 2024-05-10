@@ -47,7 +47,7 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req: any, res: any) => {
-  res.send("Hello World!");
+  res.send("Hello World@!");
 });
 
 app.post("/authenticate", (req: any, res: any) => {
