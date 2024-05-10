@@ -31,8 +31,8 @@ jobs:
         run: docker push registry.digitalocean.com/streamtogether-backend/streamtogether:latest
 
       - name: Deploy to Droplet
-        env:
-          DEPLOY_KEY: ${{ secrets.DROPLET_SSH_KEY }}
         run: |
-          echo "$DEPLOY_KEY" > id_rsa && chmod 600 id_rsa
-          ssh -o StrictHostKeyChecking=no -i id_rsa ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} "docker pull registry.digitalocean.com/streamtogether-backend/streamtogether:latest && docker stop streamtogether-backend && docker rm streamtogether-backend && docker run -d -p 2000:2000 --name streamtogether-backend registry.digitalocean.com/streamtogether-backend/streamtogether:latest"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} "docker pull registry.digitalocean.com/streamtogether-backend/streamtogether:latest && docker stop streamtogether-backend && docker run -d -p 2000:2000 --name streamtogether-backend registry.digitalocean.com/streamtogether-backend/streamtogether:latest"
