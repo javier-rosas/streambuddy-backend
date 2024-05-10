@@ -2,40 +2,39 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '18.7.0'
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.7.0"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: npm test
+      - name: Run tests
+        run: npm test
 
-    - name: Build Docker image
-      run: docker build -t registry.digitalocean.com/streamtogether-backend/streamtogether:latest .
+      - name: Build Docker image
+        run: docker build -t registry.digitalocean.com/streamtogether-backend/streamtogether:latest .
 
-    - name: Login to DigitalOcean Container Registry
-      run: echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login registry.digitalocean.com -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+      - name: Login to DigitalOcean Container Registry
+        run: echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login registry.digitalocean.com -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
-    - name: Push Docker image
-      run: docker push registry.digitalocean.com/streamtogether-backend/streamtogether:latest
-    
-    - name: Deploy to Droplet
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} "docker pull registry.digitalocean.com/streamtogether-backend/streamtogether:latest && docker stop streamtogether-backend && docker run -d -p 2000:2000 --name streamtogether-backend registry.digitalocean.com/streamtogether-backend/streamtogether:latest"
-      env:
-        DEPLOY_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+      - name: Push Docker image
+        run: docker push registry.digitalocean.com/streamtogether-backend/streamtogether:latest
 
+      - name: Deploy to Droplet
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} "docker pull registry.digitalocean.com/streamtogether-backend/streamtogether:latest && docker stop streamtogether-backend && docker run -d -p 2000:2000 --name streamtogether-backend registry.digitalocean.com/streamtogether-backend/streamtogether:latest"
+        env:
+          DEPLOY_KEY: ${{ secrets.DROPLET_SSH_KEY }}
