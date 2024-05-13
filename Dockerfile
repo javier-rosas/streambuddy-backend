@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 2000
 
 # Command to run the application
-CMD ["node", "dist/index.js"]
+CMD ["node", "-r", "module-alias/register", "dist/index.js"]
