@@ -31,6 +31,7 @@ jobs:
           echo MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} >> .env
           echo MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} >> .env
           echo MONGO_HOST=${{ secrets.MONGO_HOST }} >> .env
+          echo MONGO_DATABASE=${{ secrets.MONGO_DATABASE }} >> .env
 
       - name: Build Docker image
         run: docker build -t registry.digitalocean.com/streamtogether-backend/streamtogether:latest .
