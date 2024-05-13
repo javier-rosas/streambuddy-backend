@@ -21,6 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # placeholder for env vars
+
       - name: Build Docker image
         run: docker build -t registry.digitalocean.com/streamtogether-backend/streamtogether:latest .
 
