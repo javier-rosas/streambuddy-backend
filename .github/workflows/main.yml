@@ -26,13 +26,8 @@ jobs:
           echo PORT=${{ secrets.PORT }} >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo NETFLIX_URL=${{ secrets.NETFLIX_URL }} >> .env
-          echo =${{ secrets. }} >> .env
-          echo # Chrome Extension=${{ secrets.# Chrome Extension }} >> .env
           echo CHROME_EXTENSION_ID=${{ secrets.CHROME_EXTENSION_ID }} >> .env
           echo CHROME_EXTENSION_URL=${{ secrets.CHROME_EXTENSION_URL }} >> .env
-          echo =${{ secrets. }} >> .env
-          echo =${{ secrets. }} >> .env
-          echo # Mongo Credentials=${{ secrets.# Mongo Credentials }} >> .env
           echo MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} >> .env
           echo MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} >> .env
           echo MONGO_HOST=${{ secrets.MONGO_HOST }} >> .env
