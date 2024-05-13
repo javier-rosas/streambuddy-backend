@@ -1,15 +1,4 @@
 import { ALLOWED_ORIGINS } from "./constants";
-import { execSync } from "child_process";
-
-// Function to get the current commit hash
-export function getCommitHash(): string {
-  try {
-    return execSync("git rev-parse HEAD").toString().trim();
-  } catch (error) {
-    console.error("Failed to get commit hash:", error);
-    return "unknown";
-  }
-}
 
 // CORS Middleware to handle multiple allowed origins
 export const corsOptionsDelegate = function (req: any, callback: any) {
