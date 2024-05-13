@@ -39,7 +39,7 @@ mongoose
 
 // Routes
 app.get("/", (req: any, res: any) => {
-  res.send("Hello World!");
+  res.send(`Hello World! ${MONGO_USERNAME}`);
 });
 
 // Example of a protected route
