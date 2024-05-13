@@ -1,9 +1,8 @@
-import { ALLOWED_ORIGINS, PORT } from "./utils/constants";
-import mongoose, { ConnectOptions } from "mongoose";
+import { ALLOWED_ORIGINS, PORT } from "@/utils/constants";
 
-import { authenticateToken } from "./middleware/authentication";
+import { authenticateToken } from "@/middleware/authentication";
 import cors from "cors";
-import { corsOptionsDelegate } from "./utils/randomUtils";
+import { corsOptionsDelegate } from "@/utils/randomUtils";
 import { createServer } from "http";
 import express from "express";
 import router from "./routes";
@@ -23,13 +22,13 @@ app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use("/api", router);
 
-mongoose
-  .connect("your-mongodb-connection-string", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as ConnectOptions)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("Could not connect to MongoDB:", err));
+// mongoose
+//   .connect("your-mongodb-connection-string", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   } as ConnectOptions)
+//   .then(() => console.log("MongoDB connected"))
+//   .catch((err) => console.error("Could not connect to MongoDB:", err));
 
 // Routes
 app.get("/", (req: any, res: any) => {

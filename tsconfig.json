@@ -2,14 +2,21 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "commonjs",
-    "target": "es6", // Consider "esnext" if you're using a recent Node.js version
+    "target": "es6",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true // Optional]
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".", // This sets the base directory for non-relative module names
+    "paths": {
+      "@/types/*": ["types/*"],
+      "@/controllers/*": ["controllers/*"],
+      "@/middleware/*": ["middleware/*"],
+      "@/mongoose/*": ["mongoose/*"],
+      "@/utils/*": ["utils/*"],
+      "@/daos/*": ["daos/*"],
+    }
   },
   "include": ["./**/*.ts"],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

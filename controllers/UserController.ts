@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import { JWT_SECRET } from "../utils/constants";
+import { JWT_SECRET } from "@/utils/constants";
 import jwt from "jsonwebtoken";
-import userDao from "../daos/UserDao";
+import userDao from "@/daos/UserDao";
 
 class UserController {
   async getUserById(req: Request, res: Response) {

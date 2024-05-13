@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET;
+import { JWT_SECRET } from "@/utils/constants";
+import jwt from "jsonwebtoken";
 
 // Middleware to validate token
 export const authenticateToken = (req: any, res: any, next: any) => {
@@ -10,7 +10,7 @@ export const authenticateToken = (req: any, res: any, next: any) => {
     return res.sendStatus(401); // If no token, not authorized
   }
 
-  jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
+  jwt.verify(token, JWT_SECRET!, (err: any, user: any) => {
     if (err) {
       return res.sendStatus(403); // If token is not valid, forbidden
     }

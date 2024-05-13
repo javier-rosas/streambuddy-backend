@@ -1,4 +1,4 @@
-import { ALLOWED_ORIGINS } from "./constants";
+import { ALLOWED_ORIGINS } from "@/utils/constants";
 
 // CORS Middleware to handle multiple allowed origins
 export const corsOptionsDelegate = function (req: any, callback: any) {

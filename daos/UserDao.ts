@@ -1,5 +1,5 @@
-import { User } from "../types";
-import UserModel from "../mongoose/UserModel";
+import { User } from "@/types/index";
+import UserModel from "@/mongoose/UserModel";
 
 class UserDao {
   async getUserById(id: string) {
