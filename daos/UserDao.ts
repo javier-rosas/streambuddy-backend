@@ -2,24 +2,16 @@ import { User } from "@/types/index";
 import UserModel from "@/mongoose/UserModel";
 
 class UserDao {
-  async getUserById(id: string) {
-    return await UserModel.findById(id);
-  }
-
-  async createUser(userData: User) {
-    const user = new UserModel(userData);
-    return await user.save();
-  }
-
-  async updateUser(
-    id: string,
-    updateData: { username?: string; email?: string }
-  ) {
-    return await UserModel.findByIdAndUpdate(id, updateData, { new: true });
-  }
-
-  async deleteUser(id: string) {
-    return await UserModel.findByIdAndDelete(id);
+  async createOrUpdateUser(user: User) {
+    try {
+      const filter = { email: user.email };
+      const update = user;
+      const options = { new: true, upsert: true, setDefaultsOnInsert: true };
+      const newUser = await UserModel.findOneAndUpdate(filter, update, options);
+      return newUser;
+    } catch (err) {
+      throw new Error("Error creating or updating user");
+    }
   }
 }
 

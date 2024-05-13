@@ -11,9 +11,6 @@ router.post("/users/authenticate", userController.authenticateUser);
 router.use(authenticateToken);
 
 // User Routes
-router.get("/users/:id", userController.getUserById);
-router.post("/users", userController.createUser);
-router.put("/users/:id", userController.updateUser);
-router.delete("/users/:id", userController.deleteUser);
+router.put("/users", userController.createOrUpdateUser);
 
 export default router;

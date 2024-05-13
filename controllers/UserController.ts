@@ -5,37 +5,14 @@ import jwt from "jsonwebtoken";
 import userDao from "@/daos/UserDao";
 
 class UserController {
-  async getUserById(req: Request, res: Response) {
+  async createOrUpdateUser(req: Request, res: Response) {
     try {
-      const user = await userDao.getUserById(req.params.id);
-      res.json(user);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  }
-
-  async createUser(req: Request, res: Response) {
-    try {
-      const newUser = await userDao.createUser(req.body);
+      const user = req.body;
+      if (!user) {
+        return res.status(400).json({ error: "User data is required" });
+      }
+      const newUser = await userDao.createOrUpdateUser(user);
       res.status(201).json(newUser);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  }
-
-  async updateUser(req: Request, res: Response) {
-    try {
-      const updatedUser = await userDao.updateUser(req.params.id, req.body);
-      res.json(updatedUser);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  }
-
-  async deleteUser(req: Request, res: Response) {
-    try {
-      await userDao.deleteUser(req.params.id);
-      res.status(204).send();
     } catch (error: any) {
       res.status(500).send(error.message);
     }

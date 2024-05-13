@@ -1,17 +1,21 @@
 import { User } from "@/types/index";
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema<User>({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
-
-userSchema.pre("save", function (next) {
-  this.updatedAt = new Date();
-  next();
-});
+const userSchema = new mongoose.Schema<User>(
+  {
+    email: { type: String, required: true },
+    family_name: { type: String },
+    given_name: { type: String },
+    locale: { type: String },
+    name: { type: String },
+    nickname: { type: String },
+    picture: { type: String },
+    sid: { type: String },
+    sub: { type: String },
+    updated_at: { type: String },
+  },
+  { collection: "users", _id: false }
+);
 
 const UserModel = mongoose.model<User>("User", userSchema);
 export default UserModel;
