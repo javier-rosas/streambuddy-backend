@@ -10,3 +10,11 @@ export type User = {
   sub?: string;
   updated_at?: string;
 };
+
+export type Session = {
+  creationTimestamp: Date;
+  expirationTimestamp: Date;
+  createdBy: string;
+  participant: string | null;
+  sessionStatus: "active" | "inactive" | "expired";
+};

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticateToken } from "@/middleware/authentication";
+import sessionController from "@/controllers/SessionController";
 import userController from "@/controllers/UserController";
-
 const router = Router();
 
 // Public Route (No Authentication Middleware)
@@ -12,5 +12,8 @@ router.use(authenticateToken);
 
 // User Routes
 router.put("/users", userController.createOrUpdateUser);
+
+// Session Routes
+router.post("/sessions", sessionController.postSession);
 
 export default router;
