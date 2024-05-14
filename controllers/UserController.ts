@@ -7,7 +7,8 @@ import userDao from "@/daos/UserDao";
 class UserController {
   async createOrUpdateUser(req: Request, res: Response) {
     try {
-      const user = req.body;
+      const user = req.body.user;
+
       if (!user) {
         return res.status(400).json({ error: "User data is required" });
       }
