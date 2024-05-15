@@ -21,8 +21,7 @@
     "mongoose": "^8.3.4",
     "peer": "^1.0.2",
     "socket.io": "^4.7.4",
-    "typescript": "^5.3.3",
-    "uuid": "^9.0.1"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -30,13 +29,11 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.17",
     "@types/socket.io": "^3.0.2",
-    "@types/uuid": "^9.0.8",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0"
   },
   "_moduleAliases": {
     "@": "dist"
-}
-
+  }
 }

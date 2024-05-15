@@ -17,4 +17,5 @@ export type Session = {
   createdBy: string;
   participant: string | null;
   sessionStatus: "active" | "inactive" | "expired";
+  link: string;
 };

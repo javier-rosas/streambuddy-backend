@@ -10,3 +10,14 @@ export const corsOptionsDelegate = function (req: any, callback: any) {
   }
   callback(null, corsOptions); // Callback expects two parameters: error and options
 };
+
+// Function to generate a random string of a given length
+export const generateRandomString = (length: number): string => {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+};

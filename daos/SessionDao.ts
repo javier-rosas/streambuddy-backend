@@ -1,6 +1,6 @@
 import { Session } from "@/types/index";
 import SessionModel from "@/mongoose/SessionModel";
-
+import { generateRandomString } from "@/utils/randomUtils";
 class SessionDao {
   private static instance: SessionDao;
 
@@ -17,7 +17,7 @@ class SessionDao {
 
   // Method to find a session by user email
   async findSessionByEmail(userEmail: string): Promise<Session | null> {
-    return await SessionModel.findOne({ userEmail });
+    return await SessionModel.findOne({ createdBy: userEmail });
   }
 
   // Method to create a new session
@@ -26,15 +26,18 @@ class SessionDao {
     const expiration = new Date(now);
     expiration.setHours(now.getHours() + 1); // Set expiration to 1 hour from now
 
+    const link = generateRandomString(16);
     const session = new SessionModel({
       creationTimestamp: now,
       expirationTimestamp: expiration,
-      sessionStatus: "active",
       createdBy: userEmail,
       participant: null, // Initially, the participant is null
+      sessionStatus: "active",
+      link,
     });
 
-    return await session.save();
+    const res = await session.save();
+    return res;
   }
 }
 
