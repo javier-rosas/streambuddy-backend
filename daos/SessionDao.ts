@@ -24,7 +24,7 @@ class SessionDao {
   async createSession(userEmail: string): Promise<Session> {
     const now = new Date();
     const expiration = new Date(now);
-    expiration.setHours(now.getHours() + 1); // Set expiration to 1 hour from now
+    expiration.setHours(now.getHours() + 12); // Set expiration to 12 hours from now
 
     const link = generateRandomString(16);
     const session = new SessionModel({
