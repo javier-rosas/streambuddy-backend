@@ -58,7 +58,7 @@ jobs:
       - name: Verify Deployment
         run: |
           sleep 10 # Allow some time for the server to start
-          RESPONSE=$(curl -s http://api.streamtogether.io)
+          RESPONSE=$(curl -s https://api.streamtogether.io)
           if [[ "$RESPONSE" == *"Hello World! streambuddy-backend"* ]]; then
             echo "Deployment verified successfully."
           else
