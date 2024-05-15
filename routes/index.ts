@@ -4,7 +4,7 @@ import sessionController from "@/controllers/SessionController";
 import userController from "@/controllers/UserController";
 const router = Router();
 
-// Public Route (No Authentication Middleware)
+// Public Route (no authentication required to authenticate user)
 router.post("/users/authenticate", userController.authenticateUser);
 
 // Middleware that applies to all subsequent routes

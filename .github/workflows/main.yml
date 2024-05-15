@@ -54,3 +54,14 @@ jobs:
           docker rm streamtogether-backend && \
           docker pull registry.digitalocean.com/streamtogether-backend/streamtogether:latest && \
           docker run -d -p 2000:2000 --name streamtogether-backend registry.digitalocean.com/streamtogether-backend/streamtogether:latest"
+
+      - name: Verify Deployment
+        run: |
+          sleep 10 # Allow some time for the server to start
+          RESPONSE=$(curl -s http://api.streamtogether.io)
+          if [[ "$RESPONSE" == *"Hello World! streambuddy-backend"* ]]; then
+            echo "Deployment verified successfully."
+          else
+            echo "Deployment verification failed."
+            exit 1
+          fi
