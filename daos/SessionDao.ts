@@ -26,7 +26,7 @@ class SessionDao {
     const expiration = new Date(now);
     expiration.setHours(now.getHours() + 12); // Set expiration to 12 hours from now
 
-    const link = generateRandomString(16);
+    const link = generateRandomString(8);
     const session = new SessionModel({
       creationTimestamp: now,
       expirationTimestamp: expiration,
