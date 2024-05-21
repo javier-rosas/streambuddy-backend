@@ -13,6 +13,7 @@ const sessionSchema = new mongoose.Schema<Session>(
       required: true,
     },
     link: { type: String, required: true },
+    platform: { type: String, required: false },
   },
   { collection: "sessions" }
 );

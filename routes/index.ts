@@ -6,6 +6,7 @@ const router = Router();
 
 // Public Route (no authentication required to authenticate user)
 router.post("/users/authenticate", userController.authenticateUser);
+router.get("/join/:link", sessionController.findSessionByLink);
 
 // Middleware that applies to all subsequent routes
 router.use(authenticateToken);
@@ -14,6 +15,7 @@ router.use(authenticateToken);
 router.put("/users", userController.createOrUpdateUser);
 
 // Session Routes
-router.post("/sessions", sessionController.postSession);
+router.post("/sessions", sessionController.createSession);
+router.put("/sessions", sessionController.updateSession);
 
 export default router;

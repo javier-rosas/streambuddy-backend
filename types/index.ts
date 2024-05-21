@@ -18,4 +18,5 @@ export type Session = {
   participant: string | null;
   sessionStatus: "active" | "inactive" | "expired";
   link: string;
+  platform: string;
 };
