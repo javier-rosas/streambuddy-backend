@@ -7,7 +7,6 @@ import {
   PORT,
 } from "@/utils/constants";
 
-import { authenticateToken } from "@/middleware/authentication";
 import cors from "cors";
 import { corsOptionsDelegate } from "@/utils/randomUtils";
 import { createServer } from "http";
@@ -36,16 +35,6 @@ mongoose
   )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Could not connect to MongoDB:", err));
-
-// Routes
-app.get("/", (req: any, res: any) => {
-  res.send(`Hello World! ${MONGO_USERNAME}`);
-});
-
-// Example of a protected route
-app.get("/protected", authenticateToken, (req: any, res: any) => {
-  res.json({ message: "This is a protected route", user: req.user });
-});
 
 // Socket.io events
 io.on("connection", (socket: any) => {
