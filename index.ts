@@ -28,7 +28,7 @@ const io = require("socket.io")(server, {
 
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
-app.use("/api", router);
+app.use("/", router);
 
 mongoose
   .connect(
