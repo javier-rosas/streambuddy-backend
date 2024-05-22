@@ -1,5 +1,6 @@
+import { Request, Response, Router } from "express";
+
 import { MONGO_USERNAME } from "@/utils/constants";
-import { Router } from "express";
 import { authenticateToken } from "@/middleware/authentication";
 import sessionController from "@/controllers/SessionController";
 import userController from "@/controllers/UserController";
@@ -7,7 +8,7 @@ import userController from "@/controllers/UserController";
 const router = Router();
 
 // Routes
-router.get("/", (req: any, res: any) => {
+router.get("/", (req: Request, res: Response) => {
   res.send(`Hello World! ${MONGO_USERNAME}`);
 });
 
