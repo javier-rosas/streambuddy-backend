@@ -28,6 +28,7 @@ class UserController {
       const newUser = await userDao.createOrUpdateUser(user);
       res.status(201).json(newUser);
     } catch (error: any) {
+      console.log("error", error);
       res.status(500).send(error.message);
     }
   }
