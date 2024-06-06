@@ -26,7 +26,6 @@ class UserDao {
       const update = user;
       const options = { new: true, upsert: true, setDefaultsOnInsert: true };
       const newUser = await UserModel.findOneAndUpdate(filter, update, options);
-      console.log("newUser", newUser);
       return newUser;
     } catch (err) {
       console.error(err);

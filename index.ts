@@ -38,8 +38,9 @@ mongoose
 
 // Socket.io events
 io.on("connection", (socket: any) => {
+  // Log user connection
   console.log("User connected:", socket.id);
-
+  // Join room
   socket.on("join-room", (data: any) => {
     console.log("data", data);
     const { link } = data;
