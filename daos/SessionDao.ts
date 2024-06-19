@@ -20,26 +20,29 @@ class SessionDao {
     return await SessionModel.findOne({ createdBy: userEmail });
   }
 
-  // Method to find a session by link
-  async findSessionByLink(link: string): Promise<Session | null> {
-    return await SessionModel.findOne({ link });
+  // Method to find a session by sessionCode
+  async findSessionBySessionCode(sessionCode: string): Promise<Session | null> {
+    return await SessionModel.findOne({ sessionCode });
   }
 
   // Method to create a new session
-  async createSession(userEmail: string): Promise<Session> {
+  async createSession(
+    userEmail: string,
+    platformUrl: string
+  ): Promise<Session> {
     const now = new Date();
     const expiration = new Date(now);
     expiration.setHours(now.getHours() + 12); // Set expiration to 12 hours from now
 
-    const link = generateRandomString(5);
+    const sessionCode = generateRandomString(5);
     const session = new SessionModel({
       creationTimestamp: now,
       expirationTimestamp: expiration,
       createdBy: userEmail,
       participant: null, // Initially, the participant is null
       sessionStatus: "inactive",
-      link,
-      platform: "netflix", // TODO: Get platform from user input
+      sessionCode,
+      platformUrl,
     });
 
     const res = await session.save();
@@ -48,11 +51,11 @@ class SessionDao {
 
   // Method to update an existing session
   async updateSession(
-    link: string,
+    sessionCode: string,
     participant: string
   ): Promise<Session | null> {
     const session = await SessionModel.findOneAndUpdate(
-      { link },
+      { sessionCode },
       {
         $set: {
           participant,

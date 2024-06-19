@@ -43,12 +43,12 @@ io.on("connection", (socket: any) => {
   // Join room
   socket.on("join-room", (data: any) => {
     console.log("data", data);
-    const { link } = data;
-    socket.join(link);
-    console.log(`User ${socket.id} joined room ${link}`);
+    const { sessionCode } = data;
+    socket.join(sessionCode);
+    console.log(`User ${socket.id} joined room ${sessionCode}`);
 
     // Notify other users in the room that a new user has connected
-    socket.to(link).emit("user-connected", { link });
+    socket.to(sessionCode).emit("user-connected", { sessionCode });
   });
 
   socket.on("disconnect", () => {
@@ -56,18 +56,18 @@ io.on("connection", (socket: any) => {
   });
 
   socket.on("offer", (data: any) => {
-    const { link, offer } = data;
-    socket.to(link).emit("offer", { link, offer });
+    const { sessionCode, offer } = data;
+    socket.to(sessionCode).emit("offer", { sessionCode, offer });
   });
 
   socket.on("answer", (data: any) => {
-    const { link, answer } = data;
-    socket.to(link).emit("answer", { link, answer });
+    const { sessionCode, answer } = data;
+    socket.to(sessionCode).emit("answer", { sessionCode, answer });
   });
 
   socket.on("ice-candidate", (data: any) => {
-    const { link, candidate } = data;
-    socket.to(link).emit("ice-candidate", { link, candidate });
+    const { sessionCode, candidate } = data;
+    socket.to(sessionCode).emit("ice-candidate", { sessionCode, candidate });
   });
 });
 

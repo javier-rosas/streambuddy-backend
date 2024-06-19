@@ -12,8 +12,8 @@ const sessionSchema = new mongoose.Schema<Session>(
       enum: ["active", "inactive", "expired"],
       required: true,
     },
-    link: { type: String, required: true },
-    platform: { type: String, required: false },
+    sessionCode: { type: String, required: true },
+    platformUrl: { type: String, required: false },
   },
   { collection: "sessions" }
 );

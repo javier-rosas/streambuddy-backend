@@ -17,6 +17,7 @@ class SessionController {
   // Method to handle createSession request
   async createSession(req: Request, res: Response): Promise<void> {
     const userEmail: string = req.body.userEmail;
+    const platformUrl: string = req.body.platformUrl;
 
     if (!userEmail) {
       res.status(400).json({ error: "User email is required" });
@@ -36,7 +37,7 @@ class SessionController {
 
       // If no session exists, create a new one
       if (!session) {
-        session = await sessionDao.createSession(userEmail);
+        session = await sessionDao.createSession(userEmail, platformUrl);
       }
 
       res.status(200).json(session);
@@ -45,17 +46,17 @@ class SessionController {
     }
   }
 
-  // Method to get the session by link
-  async findSessionByLink(req: Request, res: Response): Promise<void> {
-    const link: string = req.params.link;
+  // Method to get the session by sessionCode
+  async findSessionBySessionCode(req: Request, res: Response): Promise<void> {
+    const sessionCode: string = req.params.sessionCode;
 
-    if (!link) {
-      res.status(400).json({ error: "Link is required" });
+    if (!sessionCode) {
+      res.status(400).json({ error: "sessionCode is required" });
       return;
     }
 
     try {
-      const session = await sessionDao.findSessionByLink(link);
+      const session = await sessionDao.findSessionBySessionCode(sessionCode);
 
       if (!session) {
         res.status(404).json({ error: "Session not found" });
@@ -70,12 +71,12 @@ class SessionController {
 
   // Method to handle joinSession request
   async updateSession(req: Request, res: Response): Promise<void> {
-    const link: string = req.body.link;
+    const sessionCode: string = req.body.sessionCode;
     const userEmail: string = req.body.userEmail;
 
-    if (!userEmail || !link) {
+    if (!userEmail || !sessionCode) {
       res.status(400).json({
-        error: "User email and link are required to join the session.",
+        error: "User email and sessionCode are required to join the session.",
       });
       return;
     }
@@ -88,8 +89,8 @@ class SessionController {
         return;
       }
 
-      // Attempt to retrieve the session using the link
-      let session = await sessionDao.findSessionByLink(link);
+      // Attempt to retrieve the session using the sessionCode
+      let session = await sessionDao.findSessionBySessionCode(sessionCode);
       if (!session) {
         res.status(404).json({ error: "Session not found" });
         return;
@@ -103,7 +104,7 @@ class SessionController {
         return;
       }
 
-      session = await sessionDao.updateSession(link, user.email);
+      session = await sessionDao.updateSession(sessionCode, user.email);
 
       res
         .status(200)
