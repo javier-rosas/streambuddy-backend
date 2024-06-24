@@ -69,6 +69,18 @@ io.on("connection", (socket: any) => {
     const { sessionCode, candidate } = data;
     socket.to(sessionCode).emit("ice-candidate", { sessionCode, candidate });
   });
+
+  socket.on("play", (data: any) => {
+    console.log(data);
+    const { sessionCode, currentTime } = data;
+    socket.to(sessionCode).emit("play", { sessionCode, currentTime });
+  });
+
+  socket.on("pause", (data: any) => {
+    console.log(data);
+    const { sessionCode, currentTime } = data;
+    socket.to(sessionCode).emit("pause", { sessionCode, currentTime });
+  });
 });
 
 // Start server
