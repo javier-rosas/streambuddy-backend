@@ -85,7 +85,7 @@ io.on("connection", (socket: any) => {
   socket.on("go-to-movie", (data: any) => {
     console.log(data);
     const { sessionCode, link } = data;
-    socket.to(sessionCode).emit("pause", { sessionCode, link });
+    socket.to(sessionCode).emit("go-to-movie", { sessionCode, link });
   });
 });
 
